@@ -21,9 +21,9 @@ table_rows.each do |row|
           end
           paper = DepositedPaper.new(cell.text)
         when "leg"
-          paper.legislative_body = cell.text
+          paper.legislature = cell.text
         when "date"
-          paper.date = cell.text
+          paper.deposited_date = cell.text
         when "dept"
           paper.department = cell.text
         when "link"
