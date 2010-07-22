@@ -31,7 +31,11 @@ if table_rows.empty?
       cells = row.xpath('td')
       unless cells[0].text == ""
         row_count = 1
-        paper = DepositedPaper.new(cells[0].text)
+        if year == "pre2007"
+          paper = DepositedPaper.new("DEP#{cells[0].text.gsub('/', '-')}")
+        else
+          paper = DepositedPaper.new(cells[0].text)
+        end
         paper.legislature = cells[1].text
         paper.deposited_date = cells[2].text
         paper.department = cells[3].text

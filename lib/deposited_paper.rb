@@ -17,7 +17,9 @@ class DepositedPaper
     
     uuid = @reference
 
-    paper_hash["legislature"] = @legislature.split(",").collect{ |x| x.strip }
+    unless @legislature == ""
+      paper_hash["legislature"] = @legislature.split(",").collect{ |x| x.strip }
+    end
     paper_hash["deposited_date"] = @deposited_date
     paper_hash["department"] = @department
     paper_hash["description"] = @description unless @description == "" or @description.nil?
