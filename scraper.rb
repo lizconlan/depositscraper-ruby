@@ -1,13 +1,13 @@
 require 'rubygems'
 require 'open-uri'
 require 'nokogiri'
+require 'json'
 require 'lib/deposited_paper'
 
 
 doc = Nokogiri::HTML(open("http://deposits.parliament.uk/"))
 table_rows = doc.xpath('//table[@class="DP"]/tr')
 
-papers = []
 paper = nil
 
 table_rows.each do |row|
@@ -16,8 +16,7 @@ table_rows.each do |row|
       case cell.attribute('class').value
         when "ref"
           if paper
-            papers << paper
-            #output each paper to a data store here
+            paper.save
           end
           paper = DepositedPaper.new(cell.text)
         when "leg"
