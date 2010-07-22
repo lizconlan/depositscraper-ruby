@@ -4,8 +4,19 @@ require 'nokogiri'
 require 'json'
 require 'lib/deposited_paper'
 
+year = nil
 
-doc = Nokogiri::HTML(open("http://deposits.parliament.uk/"))
+if ARGV.first
+  if ARGV.first[0..4] == "year="
+    year = ARGV.first.split("=")[1]
+  end
+end
+
+if year
+  doc = Nokogiri::HTML(open("http://deposits.parliament.uk/deposited_papers.asp?year=#{year}"))
+else
+  doc = Nokogiri::HTML(open("http://deposits.parliament.uk/"))
+end
 table_rows = doc.xpath('//table[@class="DP"]/tr')
 
 paper = nil
@@ -36,4 +47,7 @@ table_rows.each do |row|
       end
     end
   end
+end
+if paper
+  paper.save
 end

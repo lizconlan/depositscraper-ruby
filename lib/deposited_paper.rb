@@ -20,10 +20,10 @@ class DepositedPaper
     paper_hash["legislature"] = @legislature.split(",").collect{ |x| x.strip }
     paper_hash["deposited_date"] = @deposited_date
     paper_hash["department"] = @department
-    paper_hash["description"] = @description unless @description == ""
-    paper_hash["legislation"] = @legislation unless @legislation == ""
-    paper_hash["notes"] = @notes unless @notes == ""
-    paper_hash["link_to_paper"] = @link_to_paper unless @link_to_paper == ""
+    paper_hash["description"] = @description unless @description == "" or @description.nil?
+    paper_hash["legislation"] = @legislation unless @legislation == "" or @legislation.nil?
+    paper_hash["notes"] = @notes unless @notes == "" or @notes.nil?
+    paper_hash["link_to_paper"] = @link_to_paper unless @link_to_paper == "" or @link_to_paper.nil?
 
     #convert the hash into a valid JSON doc
     doc = <<-JSON
