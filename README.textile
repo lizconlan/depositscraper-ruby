@@ -2,14 +2,14 @@ h1. A Ruby scraper for the UK Parliament Deposits site
 
 h2. How to use the scraper
 
-To get the latest files, run as:
+h3. To get the latest files
 
-ruby scraper.rb
+<code>ruby scraper.rb</code>
 
-To get files for a specific year, run as:
+h3. To get files for a specific year
 
-ruby scraper.rb year=2009
+<code>ruby scraper.rb year=2009</code>
 
-To get files from before 2007, run as:
+h3. To get files from before 2007
 
-ruby scraper.rb year=pre2007
+<code>ruby scraper.rb year=pre2007</code>
