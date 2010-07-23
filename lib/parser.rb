@@ -20,14 +20,14 @@ class Parser
     table_rows = doc.xpath('//table[@class="DP"]/tr')
 
     if table_rows.empty?
-      parse_basic_html()
+      parse_basic_html(doc)
     else
       parse_html(table_rows)
     end
   end
   
   private
-    def parse_basic_html
+    def parse_basic_html doc
       row_count = 99
       paper = nil
       table_rows = doc.xpath('//table/tr')
@@ -72,9 +72,7 @@ class Parser
           if cell.attribute('class')
             case cell.attribute('class').value
               when "ref"
-                if paper
-                  paper.save
-                end
+                paper.save if paper
                 paper = DepositedPaper.new(cell.text)
               when "leg"
                 paper.legislature = cell.text
