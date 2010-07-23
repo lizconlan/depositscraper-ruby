@@ -11,8 +11,6 @@ class Parser
   end
   
   def parse
-    paper = nil
-    
     if @year
       doc = Nokogiri::HTML(open("http://deposits.parliament.uk/deposited_papers.asp?year=#{@year}"))
     else
@@ -22,13 +20,20 @@ class Parser
     table_rows = doc.xpath('//table[@class="DP"]/tr')
 
     if table_rows.empty?
+      parse_basic_html()
+    else
+      parse_html(table_rows)
+    end
+  end
+  
+  private
+    def parse_basic_html
       row_count = 99
+      paper = nil
       table_rows = doc.xpath('//table/tr')
       table_rows.each do |row|
-        if row.attribute('valign') and row.attribute('valign').value == "top"
-          if paper
-            paper.save
-          end      
+        if row.attribute('valign') and row.attribute('valign').value == "top"          
+          paper.save if paper
           cells = row.xpath('td')
           unless cells[0].text == ""
             row_count = 1
@@ -57,7 +62,11 @@ class Parser
           end
         end
       end
-    else
+      paper.save if paper
+    end
+  
+    def parse_html table_rows
+      paper = nil
       table_rows.each do |row|
         row.xpath('td').each do |cell|
           if cell.attribute('class')
@@ -85,10 +94,7 @@ class Parser
           end
         end
       end
+      paper.save if paper
     end
-    if paper
-      paper.save
-    end
-  end
   
 end
