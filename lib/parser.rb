@@ -22,13 +22,20 @@ class Parser
     table_rows = doc.xpath('//table[@class="DP"]/tr')
 
     if table_rows.empty?
+      parse_basic_html()
+    else
+      parse_html()
+    end
+    paper.save if paper
+  end
+  
+  private
+    def parse_basic_html
       row_count = 99
       table_rows = doc.xpath('//table/tr')
       table_rows.each do |row|
-        if row.attribute('valign') and row.attribute('valign').value == "top"
-          if paper
-            paper.save
-          end      
+        if row.attribute('valign') and row.attribute('valign').value == "top"          
+          paper.save if paper
           cells = row.xpath('td')
           unless cells[0].text == ""
             row_count = 1
@@ -57,7 +64,9 @@ class Parser
           end
         end
       end
-    else
+    end
+  
+    def parse_html
       table_rows.each do |row|
         row.xpath('td').each do |cell|
           if cell.attribute('class')
@@ -86,9 +95,5 @@ class Parser
         end
       end
     end
-    if paper
-      paper.save
-    end
-  end
   
 end
