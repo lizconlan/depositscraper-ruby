@@ -9,6 +9,7 @@ describe "DepositedPaper" do
     
       paper.reference.should == ref
     end
+
   end
   
   describe "when asked to save" do
