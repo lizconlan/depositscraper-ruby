@@ -6,10 +6,14 @@ DBSERVER = "http://localhost:5984"
 DATABASE = "#{DBSERVER}/deposits"
 
 class DepositedPaper
-  attr_accessor :reference, :legislature, :deposited_date, :department, :description, :legislation, :notes, :link_to_paper
+  attr_accessor :reference, :legislature, :deposited_date, :department, :description, :legislation, :notes, :link_to_paper, :year
 
   def initialize ref
     @reference = ref
+    if @reference =~ /DEP(.*)-/
+      @year = $1
+    end
+    @year = "pre2007" if @year == "07"
   end
   
   def save
@@ -20,6 +24,7 @@ class DepositedPaper
     unless @legislature == "" or @legislature.nil?
       paper_hash["legislature"] = @legislature.split(",").collect{ |x| x.strip }
     end
+    paper_hash["year"] = @year
     paper_hash["deposited_date"] = @deposited_date
     paper_hash["department"] = @department
     paper_hash["description"] = @description unless @description == "" or @description.nil?
