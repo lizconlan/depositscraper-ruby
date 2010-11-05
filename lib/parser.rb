@@ -182,6 +182,7 @@ class Parser
       text = text.gsub("Department for Culture, Media and Sport ", "Department for Culture, Media and Sport|")
       text = text.gsub("Department for Education ", "Department for Education|")
       text = text.gsub("Department of Energy and Climate Change ", "Department of Energy and Climate Change|")
+      text = text.gsub("Department for Environment Food and Rural Affairs ", "Department for Environment, Food and Rural Affairs|")
       text = text.gsub("Department for Environment, Food and Rural Affairs ", "Department for Environment, Food and Rural Affairs|")
       text = text.gsub("Department of Health ", "Department of Health|")
       text = text.gsub("Department for Innovation, Universities and Skills ", "Department for Innovation, Universities and Skills|")
